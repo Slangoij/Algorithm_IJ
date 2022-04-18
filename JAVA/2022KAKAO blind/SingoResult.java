@@ -3,16 +3,16 @@ import java.util.*;
 class SingoResult{
     public static void main(String[] args) {
 
-        solution();
+        // solution();
     }
 
     public int[] solution(String[] id_list, String[] report, int k) {
         int[] answer = {};
 
         HashMap<String, ArrayList<String>> map = new HashMap<>();
-        foreach(String str : report)
+        foreach(String tmpstr : report)
         {
-            String[] splstr = str.split();
+            String[] splstr = tmpstr.split();
             if (map.get(splstr[1]) == null)
             {
                 ArrayList<String> tmparr = new ArrayList<String>(Arrays.asList(splstr[0]));
