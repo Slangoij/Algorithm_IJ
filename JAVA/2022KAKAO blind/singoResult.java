@@ -1,7 +1,7 @@
 import java.util.*;
 import java.util.Map.Entry;
 
-public class gugudan {
+public class singoResult {
     public int[] solution(String[] id_list, String[] report, int k) {
         List<String> lst = Arrays.asList(report);
         Set<String> set = new HashSet<String>(lst);
@@ -28,7 +28,7 @@ public class gugudan {
         
         ArrayList<Integer> anslist = new ArrayList<>();
         for (String id:id_list) {
-        	anslist.add(reportmap.get(id));
+        	anslist.add(reportmap.getOrDefault(id, 0));
         }
         
         int[] answer = new int[id_list.length];
@@ -40,7 +40,7 @@ public class gugudan {
     }
     
     public static void main(String[] args) {
-    	gugudan gu = new gugudan();
+    	singoResult gu = new singoResult();
     	
     	String[] id_list = {"muzi", "frodo", "apeach", "neo"};
     	String[] report = {"muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"};
