@@ -39,8 +39,10 @@ public class LottoMinMax{
 	public static void main(String[] args){
 		LottoMinMax lm = new LottoMinMax();
 		
-		int[] lottos = {44, 1, 0, 0, 31, 25};
-		int[] win_nums = {31, 10, 45, 1, 6, 19};
+//		int[] lottos = {44, 1, 0, 0, 31, 25};
+//		int[] win_nums = {31, 10, 45, 1, 6, 19};
+		int[] lottos = {1,2,3,4,5,6};
+		int[] win_nums = {7,8,9,10,11,12};
 		
 //		int[] tmpansss = lm.solution(lottos, win_nums);
 		System.out.println(Arrays.toString(lm.solution(lottos, win_nums)));
