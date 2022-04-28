@@ -28,8 +28,8 @@ public class LottoMinMax{
         		numzero++;
         	}
         }
-
-        answer[1] = (tmpans > 5) ? 6:tmpans;
+        tmpans = (tmpans > 5) ? 6:tmpans;
+        answer[1] = tmpans; 
         tmpans -= numzero;
         answer[0] = (tmpans > 0) ? tmpans:1;
         
