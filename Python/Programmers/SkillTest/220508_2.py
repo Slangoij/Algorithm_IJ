@@ -1,4 +1,5 @@
-# 두번째 풀이: 2차원 배열에 그리지 말고 좌표정보만 갖고 있자.
+"""
+# 세번째 풀이: 2차원 배열에 그리지 말고 좌표정보만 갖고 있자.
 from collections import deque
 import copy
 
@@ -112,10 +113,12 @@ table = [[1,0,0,1,1,0],[1,0,1,0,1,0],[0,1,1,0,1,1],[0,0,1,0,0,0],[1,1,0,1,1,0],[
 # table = [[1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1], [1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1], [1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0], [0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0], [1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1], [1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1], [0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1], [1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1], [1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1], [1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1]]
 # solution(game_board, table)
 print(solution(game_board, table))
-
-
 """
-# 2차 풀이: 시간 초과
+
+
+# 2차 풀이: 시간 초과 -> 쓸데없는데 que를 사용할 필요는 없다.
+# bfs 정도에나 쓰자
+# 각 칸별로 주변확인시 자기자신(중심) 좌표는 확인 안함.
 from collections import deque
 import copy
 
@@ -130,31 +133,28 @@ def convert_arr_to_que(block):
                 q_blocks.append([i,j])
     return q_blocks
 
-def chkPzAround(q_block, x_move, y_move):
+def chkPzAround(block, x_move, y_move):
     global glb_game_board
     leng = len(glb_game_board)
-    maptochkblock = [[False]*leng for _ in range(leng)]
-    tmp_block = copy.deepcopy(q_block)
+    q_block = convert_arr_to_que(block)
     for x, y in list(q_block):
-        maptochkblock[x+x_move][y+y_move] = True
-    while tmp_block:
-        x, y = tmp_block.popleft()
-        x, y = x + x_move, y + y_move
+        nx, ny = x + x_move, y + y_move
         for dx, dy in dirs:
-            cx, cy = x+dx, y+dy
+            cx, cy = nx+dx, ny+dy
             if cx in range(leng) and cy in range(leng):
-                if maptochkblock[cx][cy]:
-                    if glb_game_board[cx][cy] != 0:
-                        return False
-                else:
-                    if glb_game_board[cx][cy] != 1:
+                if glb_game_board[cx][cy] != 1 or glb_game_board[nx][ny] != 1:
                         return False
     return True
 
-def putPz(q_block, x_move, y_move):
+def putofliftPz(block, x_move, y_move, put):
     global glb_game_board
-    for x, y in list(q_block):
-        glb_game_board[x+x_move][y+y_move] = 1
+    hgt, wdt = len(block), len(block[0])
+    for i in range(hgt):
+        for j in range(wdt):
+            if put:
+                glb_game_board[i+x_move][j+y_move] += block[i][j]
+            else:
+                glb_game_board[i+x_move][j+y_move] -= block[i][j]
 
 def rotatedblocks(block):
     blocks = []
@@ -194,17 +194,16 @@ def getblockarr(table, vstd, i, j):
 def chkblck(block):
     global glb_game_board
     leng = len(glb_game_board)
-    x, y = list(zip(*list(block)))
-    bl_hgt = max(x) - min(x)
-    bl_wdt = max(y) - min(y)
+    bl_hgt = len(block)
+    bl_wdt = len(block[0])
     # 퍼즐움직이기
-    for x_move in range(leng-bl_hgt):
-        for y_move in range(leng-bl_wdt):
+    for x_move in range(leng-bl_hgt+1):
+        for y_move in range(leng-bl_wdt+1):
             # 퍼즐 모든 조각 맞는지 확인(주변까지)
             # 아래 인풋은 2차원 배열, 중간은 deque로 계산
-            putPz(block, x_move, y_move) # 일단 넣어보고
+            putofliftPz(block, x_move, y_move, True) # 일단 넣어보고
             if not chkPzAround(block, x_move, y_move): # 안맞으면 빼고
-                liftPz(block, x_move, y_move)
+                putofliftPz(block, x_move, y_move, False)
             else:  # 맞으면 넣은 그대로 계산
                 return True
 
@@ -215,7 +214,7 @@ def solution(game_board, table):
     glb_game_board = copy.deepcopy(game_board)
     answer = 0
     vstd = [[False]*len(table) for _ in range(len(table))]
-    blocks = deque([])
+    blocks = []
 
     leng = len(table)
     for i in range(leng):
@@ -223,23 +222,50 @@ def solution(game_board, table):
             if not vstd[i][j] and table[i][j]:
                 blocks.append(getblockarr(table, vstd, i, j))
 
-    while blocks:
-        nowblock = blocks.popleft()
-        nowblocks = rotatedblocks(nowblock)
-        dx = len(nowblock)
-        dy = len(nowblock[0])
-        blocksize = 0
-        for i in range(dx):
-            for j in range(dy):
-                if nowblock[i][j]:
-                    blocksize += 1
-        for block in nowblocks:
-            if chkblck(block):
-                answer += blocksize
+    for block in blocks:
+        rotblocks = rotatedblocks(block)
+        for rotblock in rotblocks:
+            if chkblck(rotblock):
+                answer += len(convert_arr_to_que(rotblock))
                 break
 
     return answer
-"""
+
+game_board = [
+    [1,1,0,0,1,0],
+    [0,0,1,0,1,0],
+    [0,1,1,0,0,1],
+    [1,1,0,1,1,1],
+    [1,0,0,0,1,0],
+    [0,1,1,1,0,0]
+]
+table = [
+    [1,0,0,1,1,0],
+    [1,0,1,0,1,0],
+    [0,1,1,0,1,1],
+    [0,0,1,0,0,0],
+    [1,1,0,1,1,0],
+    [0,1,0,0,0,0]
+]
+print(solution(game_board, table))
+# game_board = [[0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0], [1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0], [1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1], [0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0], [0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1], [0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0], [1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0], [0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0], [0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0]]
+# table = [[1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1], [1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1], [1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0], [0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0], [1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1], [1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1], [0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1], [1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1], [1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1], [1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1]]
+# solution(game_board, table)
+# game_board = [
+#     [0,1,1,1,1],
+#     [0,0,1,1,1],
+#     [1,0,1,0,0],
+#     [1,1,0,0,1],
+#     [1,1,1,1,1]
+# ]
+# table = [
+#     [0,0,0,1,0],
+#     [0,1,0,1,1],
+#     [0,1,1,0,1],
+#     [0,0,1,0,0],
+#     [0,0,0,0,0]
+# ]
+
 
 """
 # 첫번째 풀이: 완전 맵을 그려 구현
