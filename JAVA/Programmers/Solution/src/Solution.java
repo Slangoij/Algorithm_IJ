@@ -8,12 +8,12 @@ public class Solution {
         int divided;
         String nowchar;
         while (n > 3) {
-            divided = (n-1) % 3;
-            nowchar = numset.substring(divided+1, divided+2);
+            divided = (n+2) % 3;
+            nowchar = numset.substring(divided, divided+1);
             answer += nowchar;
-            n = (int)((n-1)/ 3) + 1;
+            n = (int)((n-1)/ 3);
         }
-        nowchar = numset.substring(n, n+1);
+        nowchar = numset.substring(n-1, n);
         answer += nowchar;
 
         StringBuffer sb = new StringBuffer(answer);
@@ -25,8 +25,9 @@ public class Solution {
         Solution tmp = new Solution();
         int n = 6;
         System.out.println(tmp.solution(n));
-//        for (int i=1;i<20;i++) {
-//            System.out.println(tmp.solution(i));
-//        }
+        for (int i=1;i<20;i++) {
+            System.out.println(tmp.solution(i));
+        }
+//        System.out.println( % 3);
     }
 }
