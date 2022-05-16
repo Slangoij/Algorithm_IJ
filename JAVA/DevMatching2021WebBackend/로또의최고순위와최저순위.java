@@ -2,7 +2,7 @@ package DevMatching2021WebBackend;
 
 import java.util.*;
 
-public class LottoMinMax{
+public class 로또의최고순위와최저순위 {
     public int[] solution(int[] lottos, int[] win_nums) {
     	int tmpans = 7;
     	int numzero = 0;
@@ -39,7 +39,7 @@ public class LottoMinMax{
     }
 	
 	public static void main(String[] args){
-		LottoMinMax lm = new LottoMinMax();
+		로또의최고순위와최저순위 lm = new 로또의최고순위와최저순위();
 		
 //		int[] lottos = {44, 1, 0, 0, 31, 25};
 //		int[] win_nums = {31, 10, 45, 1, 6, 19};

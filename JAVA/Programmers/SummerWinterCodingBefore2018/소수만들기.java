@@ -1,8 +1,8 @@
-package SummerWinterCodingBefore2018;
+package Programmers.SummerWinterCodingBefore2018;
 
 import java.util.Arrays;
 
-public class MakingSosu {
+public class 소수만들기 {
     public int solution(int[] nums) {
         int answer = 0;
         Arrays.sort(nums);

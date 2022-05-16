@@ -1,6 +1,6 @@
-package Programmers.Solution;
+package Programmers;
 
-public class Nara124 {
+public class 나라124 {
     public String solution(int n) {
         String answer = "";
         String numset = "124";
