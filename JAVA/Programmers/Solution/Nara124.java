@@ -1,7 +1,6 @@
-import java.util.ArrayList;
-import java.util.Collections;
+package Programmers.Solution;
 
-public class Solution {
+public class Nara124 {
     public String solution(int n) {
         String answer = "";
         String numset = "124";
@@ -19,15 +18,5 @@ public class Solution {
         StringBuffer sb = new StringBuffer(answer);
 
         return sb.reverse().toString();
-    }
-
-    public static void main(String[] args) {
-        Solution tmp = new Solution();
-        int n = 6;
-        System.out.println(tmp.solution(n));
-        for (int i=1;i<20;i++) {
-            System.out.println(tmp.solution(i));
-        }
-//        System.out.println( % 3);
     }
 }

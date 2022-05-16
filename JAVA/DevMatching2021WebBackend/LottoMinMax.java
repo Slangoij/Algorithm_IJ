@@ -1,3 +1,5 @@
+package DevMatching2021WebBackend;
+
 import java.util.*;
 
 public class LottoMinMax{
