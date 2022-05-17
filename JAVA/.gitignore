@@ -1,0 +1,6 @@
+.vscode
+.idea
+/CodingTest/*
+.project
+.classpath
+*.prefs
