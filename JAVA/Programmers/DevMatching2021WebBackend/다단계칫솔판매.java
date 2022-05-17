@@ -16,9 +16,9 @@ public class 다단계칫솔판매 {
 
         for (int i=0;i< seller.length;i++){
             String nowMem = seller[i];
-            int nowMon = amount[i];
+            int nowMon = amount[i] * 100;
             int comis = 0;
-            while (nowMem != "-" && nowMon > 0) {
+            while (!"-".equals(nowMem) && nowMon > 0) {
                 comis = (int) Math.floor(nowMon / 10);
                 answer[memIdxMap.get(nowMem)] += nowMon-comis;
                 nowMem = parentMap.get(nowMem);

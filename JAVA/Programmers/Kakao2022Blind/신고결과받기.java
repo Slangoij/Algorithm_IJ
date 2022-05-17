@@ -1,4 +1,4 @@
-package Kakao2022Blind;
+package Programmers.Kakao2022Blind;
 
 import java.util.*;
 import java.util.Map.Entry;
