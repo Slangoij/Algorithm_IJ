@@ -15,9 +15,14 @@ public class 실패율 {
         double silperate;
         Map<Integer, Double> silpes = new HashMap<>();
         for (int i = 1; i < N+1; i++) {
-            silperate = (double) memStages[i] / totalparti;
-            silpes.put(i, silperate);
-            totalparti -= memStages[i];
+            if (totalparti > 0){
+                silperate = (double) memStages[i] / totalparti;
+                silpes.put(i, silperate);
+                totalparti -= memStages[i];
+            }
+            else {
+                silpes.put(i, (double)0);
+            }
         }
 
         List<Map.Entry<Integer, Double>> tosort =
