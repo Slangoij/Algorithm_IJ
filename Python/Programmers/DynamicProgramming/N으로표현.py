@@ -12,15 +12,16 @@ def solution(N, number):
     dp = [0, [N]]
     chkset = set([N])
     for i in range(1,9):
+        if number in chkset:
+            return i
         tmpset = copy.deepcopy(chkset)
+        chkset.add(int(str(N)*(i+1)))
         for j in range(1,i+1):
             k = i+1-j
             for dpj in dp[j]:
                 for dpk in dp[k]:
-                    tmpset.update(oper(dpj, dpk))
-        if number in tmpset:
-            return i
-        chkset.update(tmpset)
+                    chkset.update(oper(dpj, dpk))
+        dp.append(list(chkset-tmpset))
         
     return -1
 
