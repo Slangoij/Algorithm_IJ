@@ -1,3 +1,44 @@
+
+"""
+# 3차 시도: 힙에 넣고 빼는 데도 시간이 걸리는것같다.
+# 이전까지는 테스트케이스 2까지 맞다가 그래도 여기선 3까지 맞춤
+import heapq
+import math
+
+def lcm_each(a, b):
+    return a * b // math.gcd(a, b)
+
+def lcm(lst):
+    if len(lst) == 1:
+        return lst[0]
+    ret = 1
+    for i in range(len(lst)):
+        ret = lcm_each(ret, lst[i])
+    return ret
+
+def solution(n, times):
+    times.sort()
+    line = [(time, time) for time in times]
+    heapq.heapify(line)
+    tmplcm = lcm(list(set(times)))
+    timelst = []
+    for _ in range(n):
+        fintime, tact = heapq.heappop(line)
+        if fintime > tmplcm:
+            break
+        timelst.append(fintime)
+        heapq.heappush(line, (fintime+tact, tact))
+    idx = n-1
+    return timelst[idx%len(timelst)]\
+        + timelst[-1] * (idx//len(timelst))
+"""
+
+n = 1000000000
+times = [1000000000-i for i in range(100000)]
+print(solution(n, times))
+
+"""
+# 2차 시도: 무조건 시간이 적은 대로 사람을 넣은 듯 
 import heapq
 import math
 
@@ -26,26 +67,15 @@ def solution(n, times):
         if fintime > tmplcm:
             break
         tmplst.append(fintime)
-
         peoplecnt += 1
 
 
     # return fintime, tmplst
     tmpidx = n-1
-    if n <= peoplecnt:
+    if tmpidx < peoplecnt < n:
         return tmplst[tmpidx]
-    return (tmpidx//peoplecnt)*tmplcm + tmplst[tmpidx%peoplecnt]
-
-n = 6
-times = [7,10]
-print(solution(n, times))
-# n = 23
-# times = [1,2,2,5]
-# print(solution(n, times))
-# n = 25
-# times = [1,2,2,5]
-# for i in range(1,n+1):
-#     print(i ,solution(i, times))
+    return (tmpidx//peoplecnt)*tmplst[-1] + tmplst[tmpidx%peoplecnt]
+"""
 
 """
 # 1차 시도 :
