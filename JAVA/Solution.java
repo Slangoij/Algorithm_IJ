@@ -1,18 +1,16 @@
-import Programmers.DevMatching2021WebBackend.다단계칫솔판매;
-import Programmers.Kakao2019Blind.실패율;
+import Programmers.MonthlyCodeChallenge1.내적;
 
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        실패율 solu = new 실패율();
+        내적 solu = new 내적();
 
-        int N = 3;
-//        int[] stages = {2, 1, 2, 6, 2, 4, 3, 3};
-        int[] stages = {1,1,1};
+        int[] a = {1,2,3,4};
+        int[] b = {-3,-1,0,2};
 
-        System.out.println(Arrays.toString(solu.solution(
-                N, stages
-        )));
+        System.out.println(solu.solution(
+                a,b
+        ));
     }
 }

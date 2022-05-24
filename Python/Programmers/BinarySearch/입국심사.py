@@ -4,17 +4,17 @@
 def solution(n, times):
     times.sort()
     lft, rgt = 0, times[-1]*n
-    while lft <= rgt:
+    while lft < rgt:
         mid = (lft+rgt)//2
         nowpeplavail = 0
         for time in times:
             nowpeplavail += mid//time
-        if nowpeplavail > n:
-            rgt = mid-1
+        if nowpeplavail >= n:
+            rgt = mid
         else:
             lft = mid+1
 
-    return (lft+rgt)//2
+    return rgt
 
 # n = 1000000000
 # times = [1000000000-i for i in range(100000)]
