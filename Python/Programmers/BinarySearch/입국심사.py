@@ -1,3 +1,30 @@
+# 4차 시도 : 답안 참고하여 풀이.
+# 이분 탐색 이용하였고, 단순히 최소시간만 구하면 되는데 실제 그사이 사람이
+# 각 심사대에 들어가는 과정 구현이 필요 X
+def solution(n, times):
+    times.sort()
+    lft, rgt = 0, times[-1]*n
+    while lft <= rgt:
+        mid = (lft+rgt)//2
+        nowpeplavail = 0
+        for time in times:
+            nowpeplavail += mid//time
+        if nowpeplavail > n:
+            rgt = mid-1
+        else:
+            lft = mid+1
+
+    return (lft+rgt)//2
+
+# n = 1000000000
+# times = [1000000000-i for i in range(100000)]
+n = 6
+times = [7,10]
+n = 3
+times = [1,1,1]
+# n = 3
+# times = [1,1]
+print(solution(n, times))
 
 """
 # 3차 시도: 힙에 넣고 빼는 데도 시간이 걸리는것같다.
@@ -32,10 +59,6 @@ def solution(n, times):
     return timelst[idx%len(timelst)]\
         + timelst[-1] * (idx//len(timelst))
 """
-
-n = 1000000000
-times = [1000000000-i for i in range(100000)]
-print(solution(n, times))
 
 """
 # 2차 시도: 무조건 시간이 적은 대로 사람을 넣은 듯 
