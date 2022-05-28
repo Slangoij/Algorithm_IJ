@@ -1,16 +1,22 @@
-import Programmers.MonthlyCodeChallenge1.내적;
+import Programmers.Kakaocode2017.단체사진찍기;
 
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        내적 solu = new 내적();
+        단체사진찍기 solu = new 단체사진찍기();
 
-        int[] a = {1,2,3,4};
-        int[] b = {-3,-1,0,2};
+        int n = 2;
+//        String[] data = {"N~F=0", "R~T>2"};
 
-        System.out.println(solu.solution(
-                a,b
-        ));
+//        System.out.println(solu.solution(
+//                n, data
+//        ));
+        String[] data = {"N~F=<>0", "F~N>0", "F~N<0"};
+//        Arrays.sort(data);
+        char[] tmp = data[0].toCharArray();
+        Arrays.sort(tmp);
+        System.out.println(tmp);
+//        System.out.println(Arrays.toString(data));
     }
 }
