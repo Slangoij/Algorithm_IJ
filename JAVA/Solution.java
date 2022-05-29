@@ -8,15 +8,8 @@ public class Solution {
 
         int n = 2;
 //        String[] data = {"N~F=0", "R~T>2"};
-
-//        System.out.println(solu.solution(
-//                n, data
-//        ));
-        String[] data = {"N~F=<>0", "F~N>0", "F~N<0"};
-//        Arrays.sort(data);
-        char[] tmp = data[0].toCharArray();
-        Arrays.sort(tmp);
-        System.out.println(tmp);
-//        System.out.println(Arrays.toString(data));
+        String[] data = {"M~C<2", "C~M>1"};
+//        String[] data = {"N~F=0"};
+        System.out.println(solu.solution(n, data));
     }
 }
