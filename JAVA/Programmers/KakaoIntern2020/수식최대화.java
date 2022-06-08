@@ -3,37 +3,30 @@ package Programmers.KakaoIntern2020;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class 수식최대화 {
-    ArrayList<String> retList = new ArrayList<>();
+    ArrayList<Long> retList = new ArrayList<>();
     ArrayList<String> retOpList = new ArrayList<>();
     long gAnswer;
 
-    public String calPrac(String a, String b, String op) {
-        Long tmpa = Long.parseLong(a);
-        Long tmpb = Long.parseLong(b);
+    public Long calPrac(Long a, Long b, String op) {
         long ret;
         if (op.equals("*")) {
-            ret = tmpa * tmpb;
+            ret = a * b;
         } else if (op.equals("-")) {
-            ret = tmpa - tmpb;
+            ret = a - b;
         } else {
-            ret = tmpa + tmpb;
+            ret = a + b;
         }
-        return String.valueOf(ret);
+        return ret;
     }
-//    public boolean isNum(String str) {
-//        for (int i = 0; i < str.length(); i++) {
-//            if (!Character.isDigit(str.charAt(i))) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
 
-    public void calByOp(ArrayList<String> splitstr,
-                                     ArrayList<String> opers,
-                                     String op) {
+    public void calByOp(List<Long> splitstr,
+                        ArrayList<String> opers,
+                        String op) {
 
         for (int i = 0; i < opers.size(); i++) {
             if (opers.get(i).equals(op)) {
@@ -45,7 +38,7 @@ public class 수식최대화 {
         }
     }
 
-    public void dfs(ArrayList<String> splitstr, ArrayList<String> opers) {
+    public void dfs(List<Long> splitstr, ArrayList<String> opers) {
         String[] nowopers = {"*", "-", "+"};
         int k;
         for (int i = 0; i < 3; i++) {
@@ -57,7 +50,7 @@ public class 수식최대화 {
                 calByOp(splitstr, opers, nowopers[j]);
                 calByOp(splitstr, opers, nowopers[k]);
 
-                gAnswer = Math.max(gAnswer, Long.parseLong(retList.get(0)));
+                gAnswer = Math.max(gAnswer, retList.get(0));
             }
         }
 
@@ -66,8 +59,11 @@ public class 수식최대화 {
     public long solution(String expression) {
         gAnswer = 0;
 
-        ArrayList<String> splitstr =
-                new ArrayList<>(Arrays.asList(expression.split("[*\\-+]")));
+        List<String> splitstrarr = new ArrayList<>(Arrays.asList(expression.split("[*\\-+]")));
+        List<Long> splitstr = new ArrayList<>();
+        for (String a : splitstrarr) {
+            splitstr.add(Long.parseLong(a));
+        }
 
         ArrayList<String> opers = new ArrayList<>();
         for (int i = 0; i < expression.length(); i++) {
@@ -81,4 +77,13 @@ public class 수식최대화 {
 
         return gAnswer;
     }
+
+//    public boolean isNum(String str) {
+//        for (int i = 0; i < str.length(); i++) {
+//            if (!Character.isDigit(str.charAt(i))) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 }
