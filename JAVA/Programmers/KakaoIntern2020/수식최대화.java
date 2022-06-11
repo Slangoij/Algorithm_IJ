@@ -8,9 +8,10 @@ import java.util.stream.Stream;
 public class 수식최대화 {
     ArrayList<Long> retList = new ArrayList<>();
     ArrayList<String> retOpList = new ArrayList<>();
-    Set<String> operset = new HashSet<>();
-    List<Long> splitstr = new ArrayList<>();
+    ArrayList<Long> splitstr = new ArrayList<>();
     ArrayList<String> opers = new ArrayList<>();
+    Set<String> operset = new HashSet<>();
+    ArrayList<String> tmpoperlst;
     long gAnswer;
     int[] permArr;
 
@@ -33,8 +34,6 @@ public class 수식최대화 {
     }
 
     public void calByOp(String op) {
-        ArrayList<Long> finRetList = new ArrayList<>();
-        ArrayList<String> finRetOpList = new ArrayList<>();
         int cursor = 0;
         while (cursor < retList.size()-1) {
             Long aLong1 = retList.get(cursor);
@@ -42,33 +41,35 @@ public class 수식최대화 {
             String op1 = retOpList.get(cursor);
             if (op1.equals(op)) {
                 retList.set(cursor, calPrac(aLong1, aLong2, op1));
-                retOpList.set(cursor, op1);
-                retList.remove(cursor);
+                retList.remove(cursor+1);
+                retOpList.remove(cursor);
             }
 //            else {
 //                retList.add(aLong1);
 //                retOpList.add(op1);
 //            }
-            cursor++;
+            else{
+                cursor++;
+            }
         }
     }
 
     public void permute(int now, int trg) {
         if (now == trg) {
-            ArrayList<String> tmpoperlst = new ArrayList<>(operset);
             for (int i = 0; i < trg; i++) {
                 calByOp(tmpoperlst.get(permArr[i]));
             }
-            gAnswer = Math.max(gAnswer, retList.get(0));
-            retList.clear();
-            retOpList.clear();
+            gAnswer = Math.max(gAnswer, Math.abs(retList.get(0)));
+            retList = new ArrayList<>();
+            retOpList = new ArrayList<>();
+            retList.addAll(splitstr);
+            retOpList.addAll(opers);
         }
         for (int i = now; i < trg; i++) {
             swap(permArr, now, i);
             permute(now+1, trg);
             swap(permArr, now, i);
         }
-
 
 //        int k;
 //        for (int i = 0; i < 3; i++) {
@@ -89,10 +90,9 @@ public class 수식최대화 {
     public long solution(String expression) {
         gAnswer = 0;
 
-        List<String> splitstrarr = new ArrayList<>(Arrays.asList(expression.split("[*\\-+]")));
-        for (String a : splitstrarr) {
+        List<String> tmpSplitStrArr = new ArrayList<>(Arrays.asList(expression.split("[*\\-+]")));
+        for (String a : tmpSplitStrArr) {
             long l = Long.parseLong(a);
-            retList.add(l);
             splitstr.add(l);
         }
 
@@ -100,18 +100,21 @@ public class 수식최대화 {
             char tmpchr = expression.charAt(i);
             if (!Character.isDigit(tmpchr)) {
                 String tmpstr = Character.toString(tmpchr);
-                retOpList.add(tmpstr);
                 operset.add(tmpstr);
                 opers.add(tmpstr);
             }
         }
 
+        tmpoperlst = new ArrayList<>(operset);
         permArr = new int[operset.size()];
         for (int i = 0; i < operset.size(); i++) {
             permArr[i] = i;
         }
 
-        int a = operset.size();
+        retList = new ArrayList<>();
+        retOpList = new ArrayList<>();
+        retList.addAll(splitstr);
+        retOpList.addAll(opers);
         permute(0, operset.size());
 
         return gAnswer;

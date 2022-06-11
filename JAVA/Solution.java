@@ -7,6 +7,7 @@ public class Solution {
         수식최대화 solu = new 수식최대화();
 
         String expression = "100-200*300-500+20";
+//        String expression =  "50*6-3*2";
         System.out.println(solu.solution(expression));
     }
 }
