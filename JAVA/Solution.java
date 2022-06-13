@@ -1,13 +1,13 @@
-import Programmers.KakaoIntern2020.수식최대화;
+
+import Programmers.짝지어제거하기;
 
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        수식최대화 solu = new 수식최대화();
+        짝지어제거하기 solu = new 짝지어제거하기();
 
-        String expression = "100-200*300-500+20";
-//        String expression =  "50*6-3*2";
-        System.out.println(solu.solution(expression));
+        String s = "cdcd";
+        System.out.println(solu.solution(s));
     }
 }
