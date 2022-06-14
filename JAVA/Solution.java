@@ -1,13 +1,13 @@
 
-import Programmers.짝지어제거하기;
+import Programmers.조이스틱;
 
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        짝지어제거하기 solu = new 짝지어제거하기();
+        조이스틱 solu = new 조이스틱();
 
-        String s = "cdcd";
+        String s = "AABA";
         System.out.println(solu.solution(s));
     }
 }
