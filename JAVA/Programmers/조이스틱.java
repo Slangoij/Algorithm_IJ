@@ -6,7 +6,8 @@ public class 조이스틱 {
     ArrayList<Integer> perm = new ArrayList<>();
     int[] arr;
     int len;
-    int answer = 100;
+    int answer = 0;
+    int posans = 100;
 
     static void swap(int[] arr, int depth, int i) {
         int tmp = arr[depth];
@@ -24,7 +25,7 @@ public class 조이스틱 {
                 tmpans += Math.min(Math.abs(len - tmpdist), tmpdist);
                 tmp = arr[i];
             }
-            answer = Math.min(answer, tmpans);
+            posans = Math.min(posans, tmpans);
         }
 
         for (int i = now; i < trg; i++) {
@@ -41,34 +42,27 @@ public class 조이스틱 {
     }
 
     public int solution(String name) {
-//        answer = getDistFromA(name.charAt(0));
-//        boolean[] vstd = new boolean[name.length()];
-//        for (int i = 0; i < name.length(); i++) {
-//            vstd[i] = false;
-//        }
-//        vstd[0] = true;
-//        int idx = 0;
-//        int nxtidx = 0;
         int cnt = 0;
+        len = name.length();
 
         for (int i = 0; i < name.length(); i++) {
             answer += getDistFromA(name.charAt(i));
-            if (name.charAt(i) != 'A') {
+            if (i != 0 && name.charAt(i) != 'A') {
                 cnt++;
             }
         }
         arr = new int[cnt];
         cnt = 0;
-        for (int i = 0; i < name.length(); i++) {
+        for (int i = 1; i < name.length(); i++) {
             if (name.charAt(i) != 'A') {
-                arr[cnt] = name.charAt(i);
+                arr[cnt] = i;
                 cnt++;
             }
         }
 
         perm(0, cnt);
 
-        return answer;
+        return answer + posans;
 
 //        while (idx == nxtidx) {
 //            for (int i = 1; i < (name.length() / 2) + 1; i++) {
