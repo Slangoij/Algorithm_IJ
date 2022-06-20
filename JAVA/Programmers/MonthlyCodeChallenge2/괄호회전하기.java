@@ -9,7 +9,7 @@ public class 괄호회전하기 {
         for (char c : chararr) {
             if (c == '[' || c == '{' || c == '(') {
                 chrlst.add(c);
-            } else if (chrlst.size() > 0){
+            } else if (chrlst.size() > 0) {
                 Character lastchr = chrlst.get(chrlst.size() - 1);
                 if ((lastchr == '[' && c == ']') ||
                         (lastchr == '{' && c == '}') ||
@@ -18,6 +18,8 @@ public class 괄호회전하기 {
                 } else {
                     return false;
                 }
+            } else {
+                return false;
             }
         }
         if (chrlst.size() > 0) return false;
