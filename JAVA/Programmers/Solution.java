@@ -1,3 +1,5 @@
+package Programmers;
+
 import Programmers.SummerWinterCoding2019.멀쩡한사각형;
 
 import java.util.Arrays;
