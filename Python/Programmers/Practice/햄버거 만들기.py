@@ -1,14 +1,13 @@
+"""
+순서가 중요하므로 스택 이용만 하면 풀리는 문제
+"""
+
 def make_ham(que):
     if que[0] < 2:
         return False
     for i in que[1:]:
         if i < 1:
             return False
-
-    if que[0] < 2:
-        que[0] -= 2
-    for i in que[1:]:
-        i -= 1
     return True
 
 def solution(ingredient):
@@ -19,6 +18,7 @@ def solution(ingredient):
         que_set[i] += 1
         if make_ham(que_set[1:]):
             answer += 1
+            que_set = [0,0,0,0]
 
     return answer
 
