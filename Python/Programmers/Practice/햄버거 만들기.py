@@ -1,30 +1,25 @@
 """
 순서가 중요하므로 스택 이용만 하면 풀리는 문제
 """
+from collections import deque
 
-def make_ham(que):
-    if que[0] < 2:
-        return False
-    for i in que[1:]:
-        if i < 1:
-            return False
-    return True
+recipe = [1,2,3,1]
 
 def solution(ingredient):
-    answer = 0
-    que_set = [0,0,0,0]
+    answer, j = 0, 0
 
-    for i in ingredient:
-        que_set[i] += 1
-        if make_ham(que_set[1:]):
+    for ing in ingredient:
+        if ing == recipe[j]:
+            j += 1
+        if j >= 4:
             answer += 1
-            que_set = [0,0,0,0]
+            j = 0
 
     return answer
 
 if __name__ == "__main__":
 
-    ing = [1, 3, 2, 1, 2, 1, 3, 1, 2]
+    ing = [2, 1, 1, 2, 3, 1, 2, 3, 1]
 
     print(solution(ing))
 
