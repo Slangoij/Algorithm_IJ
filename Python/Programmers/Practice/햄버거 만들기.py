@@ -4,16 +4,18 @@
 from collections import deque
 
 recipe = [1,2,3,1]
+elstack = []
 
 def solution(ingredient):
-    answer, j = 0, 0
+    answer, i = 0, 0
 
     for ing in ingredient:
-        if ing == recipe[j]:
-            j += 1
-        if j >= 4:
-            answer += 1
-            j = 0
+        if ing == recipe[i]:
+            i += 1
+            if :
+                pass
+        else:
+            elstack.append(ing)
 
     return answer
 
