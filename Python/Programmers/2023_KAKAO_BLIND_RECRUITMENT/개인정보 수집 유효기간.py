@@ -1,19 +1,41 @@
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 
 def solution(today, terms, privacies):
     answer = []
     
-    datetime.strptime(today, "%Y.%m.%d")
-    due_date_map = {}
+    today_dt = datetime.strptime(today, "%Y.%m.%d")
+    new_date = None
+    due_date_map = dict({})
+    
     for term in terms:
-        (alpha, delta_time) = term.split()
-        due_date_map[alpha] = today_dt + timedelta(months=int(delta_time))
+        (alpha, delta_time_str) = term.split()
         
+        delta_mth_val = int(delta_time_str)
+
+        new_yr, delta_yr, delta_mth, new_date = 0, 0, 0, None
+        
+        if delta_mth_val > 12:
+            delta_yr = delta_mth_val // 12
+            delta_mth = ((delta_mth_val-1) % 12) + 1
+            
+        new_yr = int(today_dt.year+delta_yr)
+        new_mth = int(today_dt.month + delta_mth)
+
+        new_date = today_dt.replace(year=new_yr, month=new_mth)
+        
+        # print("set : " + alpha)
+        due_date_map[alpha] = new_date
+        
+    print(due_date_map)
+
     for i in range(len(privacies)):
-        (crnt_date, crnt_priv) = privacies[i + 1].split()
+        (crnt_date, alpha) = privacies[i].split()
         crnt_date_dt = datetime.strptime(crnt_date, "%Y.%m.%d")
         
-        if crnt_date_dt >= due_date_map[crnt_priv]:
+        # print("get : " + alpha)
+        
+        print(crnt_date_dt, due_date_map[alpha], crnt_date_dt >= due_date_map[alpha])
+        if crnt_date_dt >= due_date_map[alpha]:
             answer.append(i+1)
     
     return answer
