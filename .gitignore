@@ -1,6 +1,6 @@
 .vscode
 .idea
-/CodingTest/*
+*/CodingTest/*
 .project
 .classpath
 *.class
