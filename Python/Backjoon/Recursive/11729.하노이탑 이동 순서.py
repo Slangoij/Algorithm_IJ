@@ -1,16 +1,20 @@
-count = 0
+def move_hanoi(m, n, N):
+    global count, lst
 
-def mv1()
-
-def move_hanoi(m, N):
-    if m == 1:
-        print()
+    if N == 1:
+        lst.append([m+1, n+1])
         count += 1
-        
-    move_hanoi(m-1, N)
-    print(m)
-    move_hanoi(m-1, N)
+    else:
+        move_hanoi(m, 3-m-n, N-1)
+        lst.append([m+1, n+1])
+        count += 1
+        move_hanoi(3-m-n, n, N-1)
 
 if __name__ == "__main__":
-    N = int(input())
-    move_hanoi(N)
+    N = int(input())    
+    count, lst = 0, []
+    move_hanoi(0, 2, N)
+
+    print(count)
+    for l in lst:
+        print(l[0], l[1])
