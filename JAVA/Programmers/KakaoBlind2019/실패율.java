@@ -1,4 +1,4 @@
-package Programmers.Kakao2019Blind;
+package Programmers.KakaoBlind2019;
 
 import java.util.*;
 
